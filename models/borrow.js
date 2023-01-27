@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const Borrow = sequelize.define("Borrow", { timestamp: false });
-  const Category = sequelize.define("Category", { timestamp: false });
-  const Book = sequelize.define(
-    "Book",
+  const User = sequelize.define("User", { timestamp: false });
+  const Book = sequelize.define("Book", { timestamp: false });
+  const Borrow = sequelize.define(
+    "Borrow",
     {
       id: {
         allowNull: false,
@@ -10,28 +10,31 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      title: {
-        type: DataTypes.STRING,
-      },
-      author: {
-        type: DataTypes.STRING,
-      },
-      categoryId: {
+      userId: {
         type: DataTypes.INTEGER,
         references: {
           model: {
-            tableName: "categories",
+            tableName: "users",
           },
           key: "id",
         },
       },
-      publisher: {
-        type: DataTypes.STRING,
+      bookId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: "books",
+          },
+          key: "id",
+        },
+      },
+      date: {
+        type: DataTypes.DATE,
+      },
+      lamaPinjam: {
+        type: DataTypes.INTEGER,
       },
       description: {
-        type: DataTypes.STRING,
-      },
-      year: {
         type: DataTypes.STRING,
       },
       status: {
@@ -47,10 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "books",
+      tableName: "borrows",
     }
   );
-  Book.belongsTo(Category);
-  Book.hasMany(Borrow);
-  return Book;
+  Borrow.belongsTo(User);
+  Borrow.belongsTo(Book);
+  return Borrow;
 };

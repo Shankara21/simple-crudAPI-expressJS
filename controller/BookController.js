@@ -145,4 +145,19 @@ module.exports = {
       next(error);
     }
   },
+  countBookByCategory: async (req, res, next) => {
+    try {
+      const result = await Book.findAll({
+        group: ["Book.categoryId"],
+        attributes: [
+          "Book.categoryId",
+          [sequelize.fn("COUNT", sequelize.col("categoryId")), "total"],
+        ],
+        include: [{ attributes: ["name"], model: Category }],
+      });
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
