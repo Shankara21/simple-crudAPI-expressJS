@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Book = sequelize.define("Product", { timestamps: false });
+  const Book = sequelize.define("Book", { timestamps: false });
   const Category = sequelize.define("Category", {
     id: {
       allowNull: false,
